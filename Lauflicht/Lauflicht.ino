@@ -5,10 +5,13 @@ const int SCLK = 1; // SRCLK
 const int RCLK = 2; // RCLK
 const int CLEAR = 3; // SRCLR
 const int LED = 7;
+const int SW = 5;
 
 std::array<int,16> state = {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0};
 std::array<int,16> off = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+int stop = 0; // 1=stop else run
 int dir = 1; // Direction 1=right 0=left
+int button = 0;
 
 void setup() {
   // Pin modes
@@ -18,9 +21,13 @@ void setup() {
   pinMode(CLEAR, OUTPUT);
   pinMode(LED, OUTPUT);
 
+  pinMode(SW, INPUT_PULLUP);
+
   // Clear Register
   digitalWrite(CLEAR, LOW);
   digitalWrite(CLEAR, HIGH);
+
+  Serial.begin(9600);
 
 }
 
@@ -67,18 +74,28 @@ void writeBit(int bit) {
 
 void loop() {
   
-  if(dir == 1) {
+  button = digitalRead(SW);
+  Serial.println(button);
+
+
+  if(button == 0 && stop == 0) {
+    stop = 1;
+  } else if(button == 0 && stop == 1) {
+    stop = 0;
+  }
+
+  if(dir == 1 && stop != 1) {
 
     state = shiftRight(state);
 
-  } else {
+  } else if(stop != 1) {
 
     state = shiftLeft(state);
 
   }
 
   writeStates(state);
-  delay(1000);
+  delay(200);
 
   if(state[12] == 1) {
     dir = 0;
