@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ByteRider Controller</title>
+        <style>
+            .container {
+                display: grid;
+                grid-template-columns: auto auto auto;
+                gap: 10px;
+                width: 85vw;
+                height: 85vh;
+                margin: 20px;
+            }
+            .container > button {
+                background-color: #00c3ff;
+                border: 1px solid rgb(0, 60, 255);
+                border-radius: 10px;
+                padding: 10px;
+                font-size: 30px;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 5vw;
+                grid-column-start: 1;
+                grid-column-end: 3;
+                grid-row: 1;
+            }
+
+            button:active {
+                background-color: #ffffff;
+            }
+            .left {
+                grid-row: 2;
+                grid-column: 1;
+            }
+            .top {
+                grid-row: 1;
+                grid-column: 3;
+                margin-left: 10vw;
+            }
+            .right {
+                grid-row: 2;
+                grid-column: 2;
+            }
+            .down {
+                grid-row: 2;
+                grid-column: 3;
+                margin-left: 10vw;
+            }
+        </style>
+    </head>
+    <body>
+            <div class="container">
+                <h1>ByteRider</h1>
+                <button class="left" name="direction" value="left">←</button>
+                <button class="top" name="drive" value="forward">↑</button>
+                <button class="down" name="drive" value="backwards">↓</button> 
+                <button class="right" name="direction" value="right">→</button>           
+            </div>
+    </body>
+</html>
