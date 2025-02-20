@@ -51,14 +51,37 @@
                 margin-left: 10vw;
             }
         </style>
+        <script>
+
+            function turnLeft(a) {
+                let xhr = new XMLHttpRequest();
+                xhr.open("GET", "/update?left="+a.toString());
+            }
+
+            function turnRight(a) {
+                let xhr = new XMLHttpRequest();
+                xhr.open("GET", "/update?right="+a.toString());
+            }
+
+            function driveForward(a) {
+                let xhr = new XMLHttpRequest();
+                xhr.open("GET", "/update?forwards="+a.toString());
+            }
+
+            function driveBackwards(a) {
+                let xhr = new XMLHttpRequest();
+                xhr.open("GET", "/update?backwards="+a.toString());
+            }
+
+        </script>
     </head>
     <body>
             <div class="container">
                 <h1>ByteRider</h1>
-                <button class="left" name="direction" value="left">←</button>
-                <button class="top" name="drive" value="forward">↑</button>
-                <button class="down" name="drive" value="backwards">↓</button> 
-                <button class="right" name="direction" value="right">→</button>           
+                <button class="left" ontouchstart="turnLeft(1)" ontouchend="turnLeft(0)">←</button>
+                <button class="top" ontouchstart="driveForward(1)" ontouchend="driveForward(0)">↑</button>
+                <button class="down" ontouchstart="driveBackwards(1)" ontouchend="driveBackwards(0)">↓</button> 
+                <button class="right" ontouchstart="turnRight(1)" ontouchend="turnRight(0)">→</button>           
             </div>
     </body>
 </html>
