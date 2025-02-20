@@ -11,7 +11,7 @@
 Servo MY_SERVO;
 #define ANGLE_STRAIGHT 60
 #define ANGLE_LEFT 40
-#define ANGLE_RIGHT 90
+#define ANGLE_RIGHT 85
 
 // just copy paste HTML file content
 const char html[] = R"==(<!DOCTYPE html>
@@ -30,6 +30,8 @@ const char html[] = R"==(<!DOCTYPE html>
                 margin: 20px;
             }
             .container > button {
+              -webkit-user-select: none;
+                user-select: none;
                 background-color: #00c3ff;
                 border: 1px solid rgb(0, 60, 255);
                 border-radius: 10px;
@@ -39,6 +41,8 @@ const char html[] = R"==(<!DOCTYPE html>
             }
 
             h1 {
+              -webkit-user-select: none;
+                user-select: none;
                 font-size: 5vw;
                 grid-column-start: 1;
                 grid-column-end: 3;
@@ -46,22 +50,32 @@ const char html[] = R"==(<!DOCTYPE html>
             }
 
             button:active {
-                background-color: #ffffff;
+              -webkit-user-select: none;
+              user-select: none;
+              background-color: #ffffff;
             }
             .left {
+              -webkit-user-select: none;
+              user-select: none;
                 grid-row: 2;
                 grid-column: 1;
             }
             .top {
+              -webkit-user-select: none;
+              user-select: none;
                 grid-row: 1;
                 grid-column: 3;
                 margin-left: 10vw;
             }
             .right {
+              -webkit-user-select: none;
+              user-select: none;
                 grid-row: 2;
                 grid-column: 2;
             }
             .down {
+              -webkit-user-select: none;
+              user-select: none;
                 grid-row: 2;
                 grid-column: 3;
                 margin-left: 10vw;
