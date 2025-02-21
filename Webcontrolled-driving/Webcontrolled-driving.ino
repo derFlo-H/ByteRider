@@ -1,6 +1,7 @@
 #include <WiFi.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
+#include <DNSServer.h>
 
 #include <ESP32Servo.h>
 
@@ -21,6 +22,7 @@ const char html[] = R"==(<!DOCTYPE html>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ByteRider Controller</title>
         <style>
+            body {overflow: hidden;}
             .container {
                 display: grid;
                 grid-template-columns: auto auto auto;
@@ -104,9 +106,27 @@ const char html[] = R"==(<!DOCTYPE html>
 </html>)==";
 
 // ssid is the name that will be displayed
-const char* ssid = "Flos-Karre";
+const char* ssid = "BRUMM BRUMM";
 const char* password = "12345678";
 AsyncWebServer server(80);
+DNSServer dnsServer;
+
+class CaptiveRequestHandler : public AsyncWebHandler {
+public:
+  CaptiveRequestHandler() {}
+  virtual ~CaptiveRequestHandler() {}
+
+  bool canHandle(__unused AsyncWebServerRequest *request) const override{
+    //request->addInterestingHeader("ANY");
+    return true;
+  }
+
+  void handleRequest(AsyncWebServerRequest *request) {
+    AsyncResponseStream* response = request->beginResponseStream("text/html");
+    response->print(html);
+    request->send(response);
+  }
+};
 
 // GET /update?direction=<dir>&do=<act>
 // reacts to GET request and drives motors based on that
@@ -182,9 +202,14 @@ void setup() {
     request->send(200, "text/plain", "OK");
   });
   // Start the server
+  dnsServer.setErrorReplyCode(DNSReplyCode::NoError);
+  dnsServer.setTTL(300);
+  dnsServer.start(53, "*", WiFi.softAPIP());
+  server.addHandler(new CaptiveRequestHandler());
   server.begin();
 }
 
 void loop() {
-  // Nothing goes here
+  dnsServer.processNextRequest();
+
 }
